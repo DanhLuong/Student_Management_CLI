@@ -44,13 +44,13 @@ public class Main {
                         if(initalSize==0) {
                             System.out.println("No student in the list yet!");
                         }else {
-                            List<Integer> removeList=new ArrayList<>();
+                            List<Student> afterRemoveList=new ArrayList<>();
                             for (Student student : studentList) {
-                                if (student.getName().toLowerCase().equals(tempName.toLowerCase())) {
-                                    studentList.remove(student);
+                                if (!student.getName().toLowerCase().equals(tempName.toLowerCase())) {
+                                    afterRemoveList.add(student);
                                 }
                             }
-                            int finalSize = studentList.size();
+                            int finalSize = afterRemoveList.size();
                             if (finalSize - initalSize == 0) {
                                 System.out.println("No student with name: " + tempName);
                             } else {
