@@ -3,14 +3,15 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         String command;
-        String nextRound="";
+        boolean quit=true;
         String sure="";
         List<Student> studentList=new ArrayList<>();
         String tempName;
         int tempMark;
         Student tempStudent;
         int studentNumber;
-        while (!nextRound.equals("q")) {
+        String changedMarkForName;
+        while (quit) {
             Scanner scanner = new Scanner(System.in);
             System.out.println("Available command:");
             System.out.println("1.Add student");
@@ -18,12 +19,14 @@ public class Main {
             System.out.println("3.Check all student information");
             System.out.println("4.Find student by name");
             System.out.println("5.Print all student with increasing mark");
+            System.out.println("6.Edit Student's mark");
+            System.out.println("7.Exit");
             System.out.print("Please choose command (1-5): ");
             command=scanner.next();
             switch(command){
                 case "1":
                     System.out.print("Please input student number you want to add: ");
-                    studentNumber=scanner.nextInt();
+                    studentNumber=Integer.parseInt(scanner.next());
                     for(int i=0;i<studentNumber;i++) {
                         System.out.print("Please input student name :");
                         tempName=scanner.next();
@@ -56,6 +59,7 @@ public class Main {
                             } else {
                                 System.out.println("Student(s) with name " + tempName + " is deleted.");
                             }
+                            studentList=afterRemoveList;
                         }
                     } else {
                         System.out.println("Cancel Operation");
@@ -93,12 +97,37 @@ public class Main {
                         System.out.println(student.toString());
                     }
                     break;
+                case "6":
+                    System.out.print("Input name to change mark: ");
+                    changedMarkForName=scanner.next();
+                    int c=0;
+                    int changedMark=0;
+                    for (Student student : studentList) {
+                        if(changedMarkForName.toLowerCase().equals(student.getName().toLowerCase())) {
+                            c++;
+                        }
+                    }
+                    if(c>0) {
+                        System.out.print("please input changed mark: ");
+                        changedMark=Integer.parseInt(scanner.next());
+                        for (Student student : studentList) {
+                            if(changedMarkForName.toLowerCase().equals(student.getName().toLowerCase())) {
+                                student.setMark(changedMark);
+                            }
+                        }
+                        System.out.println("changed mark= "+changedMark+" for student name "+changedMarkForName);
+                    } else {
+                        System.out.println("No student has name "+changedMarkForName);
+                    }
+                    break;
+                case "7":
+                    quit=false;
+                    System.out.println("Exit");
+                    break;
                 default:
-                    System.out.println("Command is not available, please choose 1 to 5 only.");
+                    System.out.println("Command is not available, please choose 1 to 7 only.");
                     break;
             }
-            System.out.print("Press any key then Enter to continue (press q to exit): ");
-            nextRound = scanner.next();
         }
     }
 }
